@@ -1,8 +1,7 @@
 import datetime
 import sqlite3
 
-from GroceryListBot.Dao.Tables import GroceryListDao
-
+from Bots.GroceryListBot.Dao.Tables import GroceryListDao
 from Bots.GroceryListBot.Dao.Tables import GroceryItemDao
 
 
@@ -27,11 +26,16 @@ class GroceriesDao(object):
         GroceryItemDao.insert_grocery_item_record(conn, grocery_item)
         commit_and_close(conn)
 
-    def get_grocery_items(self, grocery_list_id):
+    def get_grocery_items(self):
         conn = self.get_db_connection()
-        items = GroceryItemDao.get_items_in_list(conn, grocery_list_id)
+        items = GroceryItemDao.get_latest_list(conn)
         commit_and_close(conn)
         return items
+
+    def start_new_list(self):
+        conn = self.get_db_connection()
+        GroceryListDao.start_new_list(conn, get_formatted_date())
+        commit_and_close(conn)
 
     def get_db_connection(self):
         return sqlite3.connect(self.db_name)

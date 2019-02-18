@@ -1,9 +1,10 @@
 import discord
-from Bots.GroceryListBot.Commands.HelpGroceryListCommand import HelpGroceryListCommand
-from Bots.GroceryListBot.Commands.PrintGroceryListCommand import PrintGroceryListCommand
+from Bots.GroceryListBot.CommandExecutors.HelpGroceriesCommandExecutor import HelpGroceriesCommandExecutor
+from Bots.GroceryListBot.CommandExecutors.PrintListCommandExecutor import PrintListCommandExecutor
+from Bots.GroceryListBot.CommandExecutors.ClearListCommandExecutor import ClearListCommandExecutor
 from Bots.GroceryListBot.Dao.GroceriesDao import GroceriesDao
-
-from Bots.GroceryListBot.Commands.AddGroceryItemCommand import AddGroceryItemCommand
+from Bots.GroceryListBot.CommandExecutors.AddItemCommandExecutor import AddItemCommandExecutor
+from Model.Command import Command
 from Controller.Controller import Controller
 
 
@@ -13,24 +14,25 @@ class GroceryListBotController(Controller):
         self.dao = GroceriesDao('Bots/GroceryListBot/groceries.db')
         self.dao.create_tables()
         self.dao.start_first_list()
-        add_command = AddGroceryItemCommand(self.dao)
-        help_command = HelpGroceryListCommand(self.dao)
-        print_command = PrintGroceryListCommand(self.dao)
+        add_command = AddItemCommandExecutor(self.dao)
+        help_command = HelpGroceriesCommandExecutor(self.dao)
+        print_command = PrintListCommandExecutor(self.dao)
+        clear_command = ClearListCommandExecutor(self.dao)
         self.command_map = dict([(add_command.get_name(), add_command),
                                  (help_command.get_name(), help_command),
-                                 (print_command.get_name(), print_command)])
+                                 (print_command.get_name(), print_command),
+                                 (clear_command.get_name(), clear_command)])
 
-    async def on_message(self, client, message):
+    async def on_message(self, client, command):
         """
         @type client: discord.Client
-        @type message: discord.Message
+        @type command: Command
         """
 
-        if str(message.author) == "GroceryListBot#5417":
+        if str(command.author) == "GroceryListBot#5417":
             return
 
-        command = self.command_map[message.content.split(' ')[0]]
-        if command is not None:
-            await command.execute(client, message)
+        if command.command_name in self.command_map:
+            await self.command_map[command.command_name].execute(client, command)
         else:
-            await client.send_message(message.channel, "Sorry I don't support that command yet :frowning:")
+            await client.send_message(command.channel, "Sorry I don't support that command yet :frowning:")

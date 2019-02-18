@@ -1,12 +1,15 @@
-class Command(object):
+from Model.Command import Command
+
+
+class CommandExecutor(object):
 
     def get_name(self):
         raise NotImplementedError("Name not yet set")
 
-    async def execute(self, client, message):
+    async def execute(self, client, command):
         """
         @type client: discord.Client
-        @type message: discord.Message
+        @type command: Command
         """
         raise NotImplementedError("Action not yet implemented")
 

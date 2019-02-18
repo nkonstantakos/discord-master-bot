@@ -1,6 +1,7 @@
 import discord
 
 from Bots.GroceryListBot.GroceryListBotController import GroceryListBotController
+from Model.Command import Command
 
 client = discord.Client()
 controller = GroceryListBotController()
@@ -22,9 +23,9 @@ async def on_message(message):
     """
 
     if str(message.author) == client.user:
-        print('its me')
         return
-
-    await controller.on_message(client, message)
+    elif message.content.startswith("!"):
+        command = Command(message)
+        await controller.on_message(client, command)
 
 client.run('')

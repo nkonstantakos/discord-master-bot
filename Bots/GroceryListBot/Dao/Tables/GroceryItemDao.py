@@ -13,17 +13,21 @@ def create_grocery_item_table(conn):
 
 
 def insert_grocery_item_record(conn, grocery_item):
+    """
+    @type grocery_item: GroceryItem
+    """
     conn.execute('INSERT INTO GROCERY_ITEM (grocery_list_id, item_name, item_owner, create_date)'
-                 'VALUES (?, ?, ?, ?)',
-                 (1,
-                  grocery_item.item_name,
+                 'VALUES ((SELECT MAX(grocery_list_id) FROM GROCERY_LIST), ?, ?, ?)',
+                 (grocery_item.item_name,
                   grocery_item.item_owner,
                   grocery_item.create_date))
 
 
-def get_items_in_list(conn, grocery_list_id):
+def get_latest_list(conn):
     c = conn.cursor()
-    c.execute("SELECT * FROM GROCERY_ITEM WHERE grocery_list_id = 1")
+    c.execute('''SELECT *
+                 FROM GROCERY_ITEM
+                 WHERE grocery_list_id = (SELECT MAX(grocery_list_id) FROM GROCERY_LIST)''')
     result = c.fetchall()
     items = []
     for row in result:
