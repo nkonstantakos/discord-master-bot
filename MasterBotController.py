@@ -1,10 +1,12 @@
 import discord
-
+import configparser
 from Bots.GroceryListBot.GroceryListBotController import GroceryListBotController
 from Model.Command import Command
 
 client = discord.Client()
 controller = GroceryListBotController()
+config = configparser.ConfigParser()
+config.read('properties.ini')
 
 
 @client.event
@@ -28,4 +30,4 @@ async def on_message(message):
         command = Command(message)
         await controller.on_message(client, command)
 
-client.run('')
+client.run(config['DISCORD']['botKey'])
