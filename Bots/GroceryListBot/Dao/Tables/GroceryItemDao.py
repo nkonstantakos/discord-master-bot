@@ -33,3 +33,11 @@ def get_latest_list(conn):
     for row in result:
         items.append(GroceryItem(row[0], row[1], row[2], row[3], row[4], row[5]))
     return items
+
+
+def remove_item_from_list(conn, item_number):
+    """
+    @type item_number: int
+    """
+    conn.execute('''DELETE FROM GROCERY_ITEM
+                    WHERE grocery_item_id = ?''', (item_number,))
