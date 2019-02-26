@@ -1,7 +1,7 @@
-def create_grocery_list_table(conn):
-    conn.execute('''CREATE TABLE IF NOT EXISTS GROCERY_LIST
-                     (grocery_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                     list_name TEXT,
+def create_recipe_list_table(conn):
+    conn.execute('''CREATE TABLE IF NOT EXISTS RECIPE_LIST
+                     (recipe_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                     recipe_name TEXT,
                      create_date TEXT,
                      end_date TEXT)''')
 

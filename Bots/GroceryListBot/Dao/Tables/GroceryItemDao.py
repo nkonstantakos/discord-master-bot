@@ -5,11 +5,13 @@ def create_grocery_item_table(conn):
     conn.execute('''CREATE TABLE IF NOT EXISTS GROCERY_ITEM
                      (grocery_item_id INTEGER PRIMARY KEY AUTOINCREMENT,
                      grocery_list_id INTEGER,
+                     recipe_list_id INTEGER,
                      item_name TEXT,
                      item_owner TEXT,
                      create_date TEXT,
                      end_date TEXT,
-                     FOREIGN KEY(grocery_list_id) REFERENCES GROCERY_LIST (grocery_list_id))''')
+                     FOREIGN KEY(grocery_list_id) REFERENCES GROCERY_LIST (grocery_list_id),
+                     FOREIGN KEY(recipe_list_id) REFERENCES RECIPE_LIST (recipe_list_id))''')
 
 
 def insert_grocery_item_record(conn, grocery_item):
