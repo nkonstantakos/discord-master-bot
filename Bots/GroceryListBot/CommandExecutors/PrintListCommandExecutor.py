@@ -19,4 +19,4 @@ class PrintListCommandExecutor(PrintCommandExecutor):
         elif command.command_params[0] == "mobile":
             response = MobileGroceryListPrinter.print_list(items)
 
-        await client.send_message(command.channel, "``" + response + "``")
+        await client.send_message(command.channel, "" + response + "")

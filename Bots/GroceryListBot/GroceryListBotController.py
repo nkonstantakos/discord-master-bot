@@ -4,6 +4,7 @@ from Bots.GroceryListBot.CommandExecutors.PrintListCommandExecutor import PrintL
 from Bots.GroceryListBot.CommandExecutors.ClearListCommandExecutor import ClearListCommandExecutor
 from Bots.GroceryListBot.CommandExecutors.RemoveItemCommandExecutor import RemoveItemCommandExecutor
 from Bots.GroceryListBot.CommandExecutors.AddItemCommandExecutor import AddItemCommandExecutor
+from Bots.GroceryListBot.CommandExecutors.GotItemCommandExecutor import GotItemCommandExecutor
 from Bots.GroceryListBot.Dao.GroceriesDao import GroceriesDao
 from Model.Command import Command
 from Controller.Controller import Controller
@@ -20,11 +21,13 @@ class GroceryListBotController(Controller):
         print_command = PrintListCommandExecutor(self.dao)
         clear_command = ClearListCommandExecutor(self.dao)
         remove_command = RemoveItemCommandExecutor(self.dao)
+        got_command = GotItemCommandExecutor(self.dao)
         self.command_map = dict([(add_command.get_name(), add_command),
                                  (help_command.get_name(), help_command),
                                  (print_command.get_name(), print_command),
                                  (clear_command.get_name(), clear_command),
-                                 (remove_command.get_name(), remove_command)])
+                                 (remove_command.get_name(), remove_command),
+                                 (got_command.get_name(), got_command)])
 
     async def on_message(self, client, command):
         """

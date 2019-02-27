@@ -15,6 +15,7 @@ class AddItemCommandExecutor(CommandExecutor):
         grocery_item = GroceryItem(create_date=DateUtils.get_formatted_date(),
                                    item_name=command.command_params[0],
                                    item_owner=str(command.author.name),
+                                   purchased=False,
                                    grocery_list_id=None,
                                    end_date=None,
                                    grocery_item_id=None)

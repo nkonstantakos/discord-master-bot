@@ -26,6 +26,11 @@ class GroceriesDao(object):
         GroceryItemDao.insert_grocery_item_record(conn, grocery_item)
         commit_and_close(conn)
 
+    def got_grocery_items(self, item_ids):
+        conn = self.get_db_connection()
+        GroceryItemDao.got_grocery_items(conn, item_ids)
+        commit_and_close(conn)
+
     def get_grocery_items(self):
         conn = self.get_db_connection()
         items = GroceryItemDao.get_latest_list(conn)
