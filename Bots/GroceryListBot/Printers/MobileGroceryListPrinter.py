@@ -10,8 +10,14 @@ class MobileGroceryListPrinter(GroceryListPrinter):
         @type items: list[GroceryItem]
         """
         response = ""
-        iterator = 1
         for item in items:
-            response += str(item.grocery_item_id) + ". " + item.item_name + "\n"
-            iterator += 1
+            response += format_row(item)
         return response
+
+
+def format_row(item):
+    row = str(item.grocery_item_id) + ". " + item.item_name + "\n"
+    if item.purchased:
+        row = "~~" + row + "~~"
+    return row
+

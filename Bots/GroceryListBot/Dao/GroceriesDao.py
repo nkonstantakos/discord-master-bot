@@ -26,6 +26,11 @@ class GroceriesDao(object):
         GroceryItemDao.insert_grocery_item_record(conn, grocery_item)
         commit_and_close(conn)
 
+    def got_grocery_items(self, item_ids):
+        conn = self.get_db_connection()
+        GroceryItemDao.got_grocery_items(conn, item_ids)
+        commit_and_close(conn)
+
     def get_grocery_items(self):
         conn = self.get_db_connection()
         items = GroceryItemDao.get_latest_list(conn)
@@ -35,6 +40,12 @@ class GroceriesDao(object):
     def start_new_list(self):
         conn = self.get_db_connection()
         GroceryListDao.start_new_list(conn, get_formatted_date())
+        commit_and_close(conn)
+
+    def start_new_list_with_carryover(self):
+        conn = self.get_db_connection()
+        GroceryListDao.start_new_list(conn, get_formatted_date())
+        GroceryItemDao.carryover_items(conn)
         commit_and_close(conn)
 
     def get_db_connection(self):
