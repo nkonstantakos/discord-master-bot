@@ -53,3 +53,14 @@ def remove_item_from_list(conn, item_number):
     """
     conn.execute('''DELETE FROM GROCERY_ITEM
                     WHERE grocery_item_id = ?''', (item_number,))
+
+
+def carryover_items(conn):
+    conn.execute('''UPDATE GROCERY_ITEM
+                    SET grocery_list_id =  (SELECT MAX(grocery_list_id) FROM GROCERY_LIST)
+                    WHERE purchased = 0
+                    AND grocery_list_id = (SELECT MAX(grocery_list_id)
+                                            FROM GROCERY_LIST
+                                            WHERE grocery_list_id NOT IN (SELECT MAX(grocery_list_id)
+                                                                          FROM GROCERY_LIST))''', )
+    conn.commit()

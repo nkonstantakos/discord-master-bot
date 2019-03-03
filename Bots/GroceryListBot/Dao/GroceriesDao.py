@@ -42,6 +42,12 @@ class GroceriesDao(object):
         GroceryListDao.start_new_list(conn, get_formatted_date())
         commit_and_close(conn)
 
+    def start_new_list_with_carryover(self):
+        conn = self.get_db_connection()
+        GroceryListDao.start_new_list(conn, get_formatted_date())
+        GroceryItemDao.carryover_items(conn)
+        commit_and_close(conn)
+
     def get_db_connection(self):
         return sqlite3.connect(self.db_name)
 

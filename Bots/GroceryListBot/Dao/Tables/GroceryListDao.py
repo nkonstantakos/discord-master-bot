@@ -18,3 +18,4 @@ def start_new_list(conn, current_date):
     conn.commit()
     conn.execute('''INSERT INTO GROCERY_LIST(create_date, end_date)
                     SELECT ?, ?''', (current_date, None))
+    conn.commit()
