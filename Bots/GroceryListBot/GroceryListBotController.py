@@ -16,18 +16,21 @@ class GroceryListBotController(Controller):
         self.dao = GroceriesDao('Bots/GroceryListBot/groceries.db')
         self.dao.create_tables()
         self.dao.start_first_list()
-        add_command = AddItemCommandExecutor(self.dao)
-        help_command = HelpGroceriesCommandExecutor(self.dao)
-        print_command = PrintListCommandExecutor(self.dao)
-        clear_command = ClearListCommandExecutor(self.dao)
-        remove_command = RemoveItemCommandExecutor(self.dao)
-        got_command = GotItemCommandExecutor(self.dao)
-        self.command_map = dict([(add_command.get_name(), add_command),
-                                 (help_command.get_name(), help_command),
-                                 (print_command.get_name(), print_command),
-                                 (clear_command.get_name(), clear_command),
-                                 (remove_command.get_name(), remove_command),
-                                 (got_command.get_name(), got_command)])
+        self.command_map = dict()
+        self.initialize_command_map(self.initialize_command_executors())
+
+    def initialize_command_map(self, command_list):
+        for command in command_list:
+            self.command_map[command.get_name()] = command
+
+    def initialize_command_executors(self):
+        command_list = [AddItemCommandExecutor(self.dao),
+                        AddItemCommandExecutor(self.dao),
+                        HelpGroceriesCommandExecutor(self.dao),
+                        PrintListCommandExecutor(self.dao),
+                        RemoveItemCommandExecutor(self.dao),
+                        GotItemCommandExecutor(self.dao)]
+        return command_list
 
     async def on_message(self, client, command):
         """
