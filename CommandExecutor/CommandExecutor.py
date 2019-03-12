@@ -6,6 +6,9 @@ class CommandExecutor(object):
     def get_name(self):
         raise NotImplementedError("Name not yet set")
 
+    def get_help_tip(self):
+        return ""
+
     async def execute(self, client, command):
         """
         @type client: discord.Client

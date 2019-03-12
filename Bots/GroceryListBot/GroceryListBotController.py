@@ -11,7 +11,6 @@ from Controller.Controller import Controller
 
 
 class GroceryListBotController(Controller):
-
     def __init__(self):
         self.dao = GroceriesDao('Bots/GroceryListBot/groceries.db')
         self.dao.create_tables()
@@ -24,13 +23,12 @@ class GroceryListBotController(Controller):
             self.command_map[command.get_name()] = command
 
     def initialize_command_executors(self):
-        command_list = [AddItemCommandExecutor(self.dao),
-                        AddItemCommandExecutor(self.dao),
-                        HelpGroceriesCommandExecutor(self.dao),
-                        PrintListCommandExecutor(self.dao),
-                        RemoveItemCommandExecutor(self.dao),
-                        GotItemCommandExecutor(self.dao)]
-        return command_list
+        return [AddItemCommandExecutor(self.dao, self.command_map),
+                ClearListCommandExecutor(self.dao, self.command_map),
+                HelpGroceriesCommandExecutor(self.dao, self.command_map),
+                PrintListCommandExecutor(self.dao, self.command_map),
+                RemoveItemCommandExecutor(self.dao, self.command_map),
+                GotItemCommandExecutor(self.dao, self.command_map)]
 
     async def on_message(self, client, command):
         """

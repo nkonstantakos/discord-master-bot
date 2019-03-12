@@ -5,11 +5,18 @@ from Utils import DateUtils
 
 class AddItemCommandExecutor(CommandExecutor):
 
+    def __init__(self, dao, command_map):
+        """
+        @type dao: GroceriesDao
+        """
+        self.dao = dao
+        self.command_map = command_map
+
     def get_name(self):
         return "!add"
 
-    def __init__(self, dao):
-        self.dao = dao
+    def get_help_tip(self):
+        return "Adds a new item to the current list"
 
     async def execute(self, client, command):
         grocery_item = GroceryItem(create_date=DateUtils.get_formatted_date(),

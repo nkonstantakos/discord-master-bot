@@ -7,11 +7,15 @@ class ClearListCommandExecutor(CommandExecutor):
     def get_name(self):
         return "!clear"
 
-    def __init__(self, dao):
+    def get_help_tip(self):
+        return "Starts a new grocery list"
+
+    def __init__(self, dao, command_map):
         """
         @type dao: GroceriesDao
         """
         self.dao = dao
+        self.command_map = command_map
 
     async def execute(self, client, command):
         if len(command.command_params) and command.command_params[0] == 'all':

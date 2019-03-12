@@ -6,8 +6,15 @@ class GotItemCommandExecutor(CommandExecutor):
     def get_name(self):
         return "!got"
 
-    def __init__(self, dao):
+    def get_help_tip(self):
+        return "Marks the item(s) as purchased"
+
+    def __init__(self, dao, command_map):
+        """
+        @type dao: GroceriesDao
+        """
         self.dao = dao
+        self.command_map = command_map
 
     async def execute(self, client, command):
         self.dao.got_grocery_items(command.command_params)
