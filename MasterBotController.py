@@ -31,7 +31,7 @@ def run():
         @type message: discord.Message
         """
 
-        print('updated.')
+        print('updated2.')
         if str(message.author) == client.user:
             return
         elif message.content.startswith("!update") and str(message.author) == config['DISCORD']['adminUser']:
