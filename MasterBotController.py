@@ -31,7 +31,6 @@ def run():
         @type message: discord.Message
         """
 
-        print('author: ' + message.author)
         print('name: ' + message.author.name)
         print('admin: ' + config['DISCORD']['adminUser'])
         if str(message.author) == client.user:
