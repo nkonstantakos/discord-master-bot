@@ -8,7 +8,7 @@ import sys
 from aiohttp import ClientOSError
 from Bots.GroceryListBot.GroceryListBotController import GroceryListBotController
 from Model.Command import Command
-from subprocess import call
+from subprocess import Popen
 
 
 def run():
@@ -36,8 +36,7 @@ def run():
             return
         elif message.content.startswith("!update") and str(message.author) == config['DISCORD']['adminUser']:
             os.system('git pull')
-            call(['/usr/local/DiscordBots/discord-master-bot/restart.sh'])
-            sys.exit()
+            os.execv(__file__, sys.argv)
         elif message.content.startswith("!"):
             command = Command(message)
             await controller.on_message(client, command)
