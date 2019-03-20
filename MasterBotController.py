@@ -37,7 +37,7 @@ def run():
             return
         elif message.content.startswith("!update") and str(message.author) == config['DISCORD']['adminUser']:
             os.system('git pull')
-            call('python3.6 MasterBotController.py')
+            call('/usr/local/DiscordBots/discord-master-bot/restart.sh')
             sys.exit()
         elif message.content.startswith("!"):
             command = Command(message)
