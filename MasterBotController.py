@@ -33,7 +33,7 @@ def run():
 
         if str(message.author) == client.user:
             return
-        elif message.content.startswith("!update") and message.author == config['DISCORD']['adminUser']:
+        elif message.content.startswith("!update") and message.author.name == config['DISCORD']['adminUser']:
             os.system('git pull')
             call('python3.6 MasterBotController.py')
             sys.exit()
