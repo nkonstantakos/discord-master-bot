@@ -3,6 +3,7 @@ import asyncio
 import discord
 import configparser
 import time
+import os
 from aiohttp import ClientOSError
 from Bots.GroceryListBot.GroceryListBotController import GroceryListBotController
 from Model.Command import Command
@@ -30,6 +31,8 @@ def run():
 
         if str(message.author) == client.user:
             return
+        elif message.content.startswith("!update"):
+            os.system('git pull')
         elif message.content.startswith("!"):
             command = Command(message)
             await controller.on_message(client, command)
