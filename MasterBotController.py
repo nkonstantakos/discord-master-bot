@@ -31,11 +31,11 @@ def run():
         @type message: discord.Message
         """
 
-        print('discriminator: ' + message.author.discriminator)
+        print('user: ' + str(message.author))
         print('admin: ' + config['DISCORD']['adminUser'])
         if str(message.author) == client.user:
             return
-        elif message.content.startswith("!update") and message.author.discriminator == config['DISCORD']['adminUser']:
+        elif message.content.startswith("!update") and str(message.author) == config['DISCORD']['adminUser']:
             os.system('git pull')
             call('python3.6 MasterBotController.py')
             sys.exit()
