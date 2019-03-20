@@ -4,9 +4,11 @@ import discord
 import configparser
 import time
 import os
+import sys
 from aiohttp import ClientOSError
 from Bots.GroceryListBot.GroceryListBotController import GroceryListBotController
 from Model.Command import Command
+from subprocess import call
 
 
 def run():
@@ -31,8 +33,10 @@ def run():
 
         if str(message.author) == client.user:
             return
-        elif message.content.startswith("!update"):
+        elif message.content.startswith("!update") and message.author == config['DISCORD']['adminUser']:
             os.system('git pull')
+            call('python3.6 MasterBotController.py')
+            sys.exit()
         elif message.content.startswith("!"):
             command = Command(message)
             await controller.on_message(client, command)
